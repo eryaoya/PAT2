@@ -1,0 +1,34 @@
+#include<stdio.h>
+int main(){
+	int N=1001;
+	double poly[N];
+	for(int j=1000;j>=0;j--){
+		poly[j]=0;
+	}
+	int N1,N2;
+	int t;
+	double coef;
+	scanf("%d",&N1);
+	for(int i=0;i<N1;i++){
+		scanf("%d %lf",&t,&coef);
+		poly[t]+=coef;
+	}
+	scanf("%d",&N2);
+	for(int i=0;i<N2;i++){
+		scanf("%d %lf",&t,&coef);
+		poly[t]+=coef;
+	}
+	int k=0;
+	for(int j=1000;j>=0;j--){
+		if(poly[j]!=0){
+			k++;
+		}
+	}
+	printf("%d",k);
+	for(int j=1000;j>=0;j--){
+		if(poly[j]!=0){
+			printf(" %d %.1f",j,poly[j]);
+		}
+	}
+	return 0;
+}
