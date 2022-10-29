@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<string.h>
+const int N = 501;
+int str[501]={0};
+int dist[501];//dist存储第i个结点到C1的距离 
+int n,M,C1,C2;
+int weight[501];//每个城市的救援队数 
+int city[501][501];//是城市与城市之间路径的长度 
+int sum[501],res[501];//sum[i]是第i个标点到家距离最短距离路径的长度；res[i]是第i个结点到家最大的权重 
+int max(int a,int b){
+	if(a>=b){
+		return a;
+	}
+	else{
+		return b;
+	}
+}
+//使用dijkstra算法
+//dist[]存储第i个节点到家的距离，visited[i]=true 代表第i个点是否已经遍历过。
+//遍历所有visited[i] == false的点，找出dist[i]最小的点 k。
+//遍历与k相连的点j，用 min(dist[j], dist[k] + edge[k][j])来更新 dist[j]。
+//将visited[k] = true;
+//  如果还存在点，返回2）
+void dijkstra(){
+	memset(dist,0x3f,sizeof(dist));//把所有点到C1的距离都定为∞大 
+	dist[C1]=0;//把源点到源点的距离定为0 
+	sum[C1]=1;//C1到C1的最短距离定为1 
+	res[C1]=weight[C1];
+	for(int i=0;i<=n-1;i++){//这里循环是把C1附近所有点走一遍，按照距离从小到大 
+		int t =-1;// 每次刷新t 
+		for(int j=0;j<=n-1;j++){//找出所有没访问过的点中到C1距离最小的点 
+			if(str[j]!=1 && (t==-1 || dist[t]>dist[j])){
+				t=j;
+			}
+		}
+		str[t]=1;//改变访问状态 
+		//更新其他点通过这一点的最短距离 
+		for(int j=0;j<=n-1;j++){ 
+			if(dist[j]>dist[t]+city[t][j]){
+				dist[j]=dist[t]+city[t][j]; 
+				sum[j]=sum[t];//j点到C1点最短路径通过t，则路径数量就等于t点到C1点最短距离路径数 
+				res[j]=res[t]+weight[j];//权重是t点权重加上j点权重 
+			}
+			else if(dist[j]==dist[t]+city[t][j]){
+				sum[j]+=sum[t];//补充上t点的路径数 
+				res[j]=max(res[t]+weight[j],res[j]);//比较不同路径的权重数 
+			}
+		}
+	}
+}
+int main(){
+	int p,q;
+	scanf("%d %d %d %d",&n,&M,&C1,&C2);
+	for(int i=0;i<=n-1;i++){
+		scanf("%d",&weight[i]);
+	}
+	memset(city,0x3f,sizeof(city));
+	for(int j=0;j<=M-1;j++){
+		scanf("%d %d",&p,&q);
+		scanf("%d",&city[p][q]);
+		city[q][p]=city[p][q];
+	}
+	dijkstra();
+	printf("%d %d",sum[C2],res[C2]);
+	return 0;
+}
