@@ -1,0 +1,45 @@
+#include<stdio.h>
+//建立树结点 
+struct TreeNode{
+	int k;//子结点数 
+	int children[100];//子结点的ID 
+};
+typedef struct TreeNode Tree[100];//定义一个树结点结构的数组叫Tree[100] 
+Tree v;//v[100] 
+int num[100]={0};//每个level叶结点的数 
+int maxlevel=0;//maxlevel是最多级数 
+void dfs(int index,int level){
+	if(v[index].k ==0){
+		if(level>maxlevel){
+			maxlevel=level;
+		}
+		num[level]+=1;
+	}
+	else{
+		for(int i=0;i<v[index].k;i++){
+			dfs(v[index].children[i],level+1);
+		}
+	}
+	return;
+}
+int main(){
+	int n,m,index,k;//n是总结点，m是所有非叶结点 
+	scanf("%d %d",&n,&m);
+	for(int i=0;i<=m-1;i++){
+		scanf("%d %d",&index,&k);
+		v[index].k =k;
+		for(int j=0;j<=k-1;j++){
+			scanf("%d",&v[index].children[j]);
+		}
+	}
+	dfs(1,0);//从结点01，即1，level0开始 
+	for(int i=0;i<=maxlevel;i++){
+		if(i==0){
+			printf("%d",num[i]);
+		}
+		else{
+			printf(" %d",num[i]);
+		}
+	}
+	return 0;
+}
