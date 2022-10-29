@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main(){
+	//计算a+b，赋值给sum 
+	int a,b,sum,count1;
+	scanf("%d %d",&a,&b);
+	sum=a+b;
+	// sum分正负
+	if(sum<0){printf("-");}
+	//取sum的绝对值
+	sum=abs(sum);
+	//把sum每位输出，每三位打印一个逗号 
+	count1=0;
+	int i=0;
+	char num[10];
+	int n;
+	if(sum==0){
+        printf("%d",sum);
+    }
+	while(sum!=0){
+		n=sum%10;
+		num[i++]=n+'0';
+		sum=sum/10;
+		count1++;
+		if(count1>0 && count1%3==0 && sum!=0){
+			num[i++]=',';
+		}
+	}
+	for(int j=i-1;j>=0;j--){
+		printf("%c",num[j]);
+	}
+	return 0;
+}
