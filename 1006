@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<string.h>
+//1.输入ID，进出时间
+//2.比较进出时间的早晚
+//3.复制字符串
+//4.输出字符串
+typedef struct record{
+	char ID[16];
+	char intime[9];
+	char outtime[9];
+}record;
+int gettime(char*a){
+	char ch;
+	int i=0,j=0;
+	int num[7];
+	num[0]=a[0]-'0';
+	num[1]=a[1]-'0';
+	num[2]=a[3]-'0';
+	num[3]=a[4]-'0';
+	num[4]=a[6]-'0';
+	num[5]=a[7]-'0';
+	int sum=num[0]*100000+num[1]*10000+num[2]*1000+num[3]*100+num[4]*10+num[5];
+	return sum;
+}
+int Compare(int a,int b){
+	if(a<=b){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+int main(){
+	int M;
+	scanf("%d",&M);
+	char unlockID[16],lockID[16];
+	int unlocktime=235959,locktime=0;
+	record re[M];
+	for(int i=0;i<M;i++){
+		scanf("%s %s %s",re[i].ID,re[i].intime,re[i].outtime);
+	}
+	for(int j=0;j<M;j++){
+		int a=gettime(re[j].intime);
+		int b=gettime(re[j].outtime);
+		if(Compare(a,unlocktime)){
+			unlocktime=a;
+			strcpy(unlockID,re[j].ID);
+		}
+		if(!Compare(b,locktime)){
+			locktime=b;
+			strcpy(lockID,re[j].ID);
+		}
+	}
+	printf("%s",unlockID);
+	printf(" ");
+	printf("%s",lockID);
+	return 0;
+} 
