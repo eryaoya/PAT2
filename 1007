@@ -1,0 +1,47 @@
+#include<stdio.h>
+int main(){
+	//输入K的值 
+	int K;
+	scanf("%d",&K);
+	int num[K];
+	//把K个数字放进num[K]数组中 
+	for(int i=0;i<=K-1;i++){
+		scanf("%d",&num[i]);
+	}
+	int maxsum=0;//maxsum初始化为0 
+	int front=0,end=0;//front，end初始化为0 
+	int sum=0,flag=0;//sum初始化为0 
+	//判断K个数里面有没有非负数 
+	for(int i=0;i<=K-1;i++){
+		if(num[i]>=0){
+			flag=1;
+			break;
+		}
+	}
+	for(int j=0,t=0;j<=K-1;j++){//t用来记录段开头的数字下标 
+		sum+=num[j];//sum是一段的总和，一个一个加 
+		if(maxsum<sum){//若这一段的总和大于maxsum，更新maxsum，把最大段的起点更新为t，end更新为j 
+			maxsum=sum;
+			front=t;
+			end=j;
+		}
+		//要是这一段的sum小于0，则这一段没用了，清空sum,段起点变更为j+1，赋值给t 
+		if(sum<0){
+			sum=0;
+			t=j+1;
+		}
+	}
+	if(maxsum==0){
+		if(flag==1){
+			printf("0 %d %d",front,end);
+		}
+		else{
+			printf("%d %d %d",maxsum,num[0],num[K-1]);
+		}
+	}
+	else{
+		printf("%d %d %d",maxsum,num[front],num[end]);
+	}
+	
+	return 0;
+}
