@@ -1,0 +1,28 @@
+#include <stdio.h>
+//假设 已知出现一半多的数为N，对于其他数，每一次出现抵消一次N的出现，则最后还剩的数就是N 
+int main()
+{
+  	int m, n;
+    int count = 0, num, temp;
+    int i, j;
+    scanf("%d %d", &m, &n);
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+            scanf("%d", &temp);
+            if (count == 0) {
+                num = temp;
+                count++;
+            } 
+			else {
+                if (temp == num) {
+                    count++;
+                } 
+				else {
+                    count--;
+                }
+            }
+        }
+    }
+    printf("%d", num);
+    return 0;
+}
