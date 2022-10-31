@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<string.h>
+int main(){
+	char string1[1000],string2[1000];
+	scanf("%s %s",&string1,&string2);
+	//检查string1和string2是否覆盖
+	int num1[62]={0},num2[62]={0};
+	int N1,N2;
+	N1=strlen(string1);
+	N2=strlen(string2);
+	for(int i=0;i<=N1-1;i++){
+		if(string1[i]>=48 && string1[i]<=57){
+			int n=string1[i]-'0';
+			num1[n]++;
+		}
+		else if(string1[i]>=97 && string1[i]<=122){
+			int n=string1[i]-'a'+10;
+			num1[n]++;
+		}
+		else{
+			int n=string1[i]-'A'+36;
+			num1[n]++;
+		}
+	}
+	for(int i=0;i<=N2-1;i++){
+		if(string2[i]>=48 && string2[i]<=57){
+			int n=string2[i]-'0';
+			num2[n]++;
+		}
+		else if(string2[i]>=97 && string2[i]<=122){
+			int n=string2[i]-'a'+10;
+			num2[n]++;
+		}
+		else{
+			int n=string2[i]-'A'+36;
+			num2[n]++;
+		}
+	}
+	int size=0;
+	for(int i=0;i<=61;i++){
+		if(num1[i]<num2[i]){
+			size+=num2[i]-num1[i];
+		}
+	}
+	if(size>0){
+		printf("No %d",size);
+	}
+	else{
+		printf("Yes %d",N1-N2);
+	}
+	return 0;
+}
