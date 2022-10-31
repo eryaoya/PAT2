@@ -1,0 +1,41 @@
+#include<stdio.h>
+int computesum(int a){
+	int sum=0,k=0;
+	do{
+		k=a%10;
+		sum+=k;
+		a=a/10;
+	}while(a>0);
+	return sum;
+}
+int main(){
+	int N,M;
+	scanf("%d",&N);
+	int num[N];
+	int sum[45]={0};
+	for(int i=0;i<=N-1;i++){
+		scanf("%d",&num[i]);
+	}
+	for(int i=0;i<=N-1;i++){
+		
+		M=computesum(num[i]);
+		sum[M]++;
+	}
+	int flag=0,count=0;
+	for(int j=0;j<=44;j++){
+		if(sum[j]>0){
+			count++;
+		}
+	}
+	printf("%d\n",count);
+	for(int j=0;j<=44;j++){
+		if(sum[j]>0){
+			if(flag==1){
+				printf(" ");
+			}
+			printf("%d",j);
+			flag=1;
+		}
+	}
+	return 0;
+}
