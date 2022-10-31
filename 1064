@@ -1,0 +1,41 @@
+#include<stdio.h> 
+#include<math.h>
+int N;
+int k;
+int num1[1001]={0},num2[1001]={0};
+int levelorder(int root){
+	if(root>N){
+		return 0;
+	}
+	int left = 2*root;
+	int right = 2*root+1;
+	levelorder(left);
+	num2[root]=num1[k++];
+	levelorder(right); 
+}
+int main(){
+	//1.输入序列num1
+	int temp,M;
+	scanf("%d",&N);
+	for(int i=0;i<=N-1;i++){
+		scanf("%d",&num1[i]);
+	}
+	//2.给序列重新排序num1，左小右大;冒泡排序
+	for(int i=0;i<=N-2;i++){
+		for(int j=0;j<=N-2-i;j++){
+			if(num1[j]>num1[j+1]){
+				temp=num1[j+1];
+				num1[j+1]=num1[j];
+				num1[j]=temp;
+			}
+		}
+	} 
+	//3.按照层序遍历重新排序num2，输出 
+	k=0;
+	levelorder(1);
+	printf("%d",num2[1]);
+	for(int i=2;i<=N;i++){
+		printf(" %d",num2[i]);
+	}
+	return 0;
+}
