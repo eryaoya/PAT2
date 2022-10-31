@@ -1,0 +1,36 @@
+#include<stdio.h>
+typedef struct Node{
+	char name[11];
+	char ID[11];
+	int score;
+}node;
+int main(){
+	int N,low,high;
+	scanf("%d",&N);
+	node stu[N];
+	node temp;
+	for(int i=0;i<=N-1;i++){
+		scanf("%s %s %d",&stu[i].name ,&stu[i].ID ,&stu[i].score );
+	}
+	scanf("%d %d",&low,&high);
+	for(int i=0;i<=N-2;i++){
+		for(int j=0;j<=N-2-i;j++){
+			if(stu[j].score >stu[j+1].score ){
+				temp=stu[j+1];
+				stu[j+1]=stu[j];
+				stu[j]=temp;
+			}
+		}
+	}
+	int k=0;
+	for(int i=N-1;i>=0;i--){
+		if(stu[i].score>=low && stu[i].score <=high ){
+			printf("%s %s\n",stu[i].name ,stu[i].ID );
+			k=1;
+		}
+	}
+	if(k==0){
+		printf("NONE");
+	}
+	return 0;
+}
