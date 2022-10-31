@@ -1,0 +1,35 @@
+#include<stdio.h>
+int main(){
+	int N,M,k,l,Level,maxlevel;
+	int g[110][110]={0},level[110][110]={0},num[110]={0};
+	scanf("%d %d",&N,&M);
+	for(int i=0;i<=M-1;i++){
+		scanf("%d",&k);
+		scanf("%d",&num[k]);
+		for(int j=0;j<=num[k]-1;j++){
+			scanf("%d",&g[k][j]);
+		}
+	}
+	level[1][1]=1;
+	maxlevel=1;
+	int a=1,maxg=1;
+	do{
+		Level=0;
+		for(int i=1;i<=N;i++){
+			if(level[a][i]!=0){
+				for(int j=0;j<=num[i]-1;j++){
+					int b=g[i][j];
+					level[a+1][b]=1;
+					Level++;
+				}
+			}
+		}
+		if(Level>maxlevel){
+			maxlevel=Level;
+			maxg=a+1;
+		}
+		a++;
+	}while(Level>0);
+	printf("%d %d",maxlevel,maxg);
+	return 0;
+}
